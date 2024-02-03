@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+    web:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - "8000:80"
+        depends_on:
+            - mysql
+        volumes:
+            - .:/var/www/html
+        environment:
+            - DB_CONNECTION=mysql
+            - DB_HOST=mysql
+            - DB_PORT=3306
+            - DB_DATABASE=laravel
+            - DB_USERNAME=root
+            - DB_PASSWORD=12345678
+
+    mysql:
+        image: mysql:8.2.0
+        environment:
+            MYSQL_DATABASE: laravel
+            MYSQL_ROOT_PASSWORD: 12345678
+        ports:
+            - "3306:3306"
